@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Summarize your PPTX files quickly and efficiently with PPTX Summarizer. Upload your presentation and get a concise summary in seconds.">
+    <meta name="keywords" content="PPTX Summarizer, PPTX summary, PowerPoint summary, presentation summarization">
+    <meta name="author" content="Your Company Name">
+    <meta property="og:title" content="PPTX Summarizer - Summarize Your Presentations">
+    <meta property="og:description" content="Summarize your PPTX files quickly and efficiently with PPTX Summarizer. Upload your presentation and get a concise summary in seconds.">
+    <meta property="og:image" content="https://yourwebsite.com/image.jpg">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PPTX Summarizer - Summarize Your Presentations">
+    <meta name="twitter:description" content="Summarize your PPTX files quickly and efficiently with PPTX Summarizer. Upload your presentation and get a concise summary in seconds.">
+    <meta name="twitter:image" content="https://yourwebsite.com/image.jpg">
+    <title>PPTX Summarizer - Summarize Your Presentations</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px;
+            padding: 40px;
+            background: #fff;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-form input[type="file"] {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            font-size: 1rem;
+            color: #555;
+            background: #f9f9f9;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .upload-form input[type="file"]:hover {
+            border-color: #2980b9;
+        }
+
+        .upload-form button {
+            padding: 15px 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .upload-form button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background: #f9f9f9;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: left;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .summary h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .summary ul {
+            margin: 0;
+            padding-left: 20px;
+            list-style-type: disc;
+        }
+
+        .summary ul li {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(44, 62, 80, 0.9);
+            color: white;
+            font-size: 0.9rem;
+            border-radius: 8px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .upload-form input[type="file"] {
+                padding: 10px;
+            }
+
+            .upload-form button {
+                padding: 10px 20px;
+            }
+
+            .summary {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>PPTX Summarizer</h1>
+        <form class="upload-form" id="uploadForm">
+            <input type="file" name="file" id="file" accept=".pptx" required>
+            <button type="submit">Upload and Summarize</button>
+        </form>
+        <div class="summary" id="summary">
+            <h2>Summary</h2>
+            <p>Your summary will appear here after uploading the PPTX file.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2023 Your Company Name. All rights reserved.
+    </footer>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const fileInput = document.getElementById("file");
+            const summaryDiv = document.getElementById("summary");
+            
+            if (fileInput.files.length === 0) {
+                alert("Please select a PPTX file.");
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            
+            try {
+                summaryDiv.innerHTML = `<h2>Summary</h2><p>Generating summary... Please wait.</p>`;
+                
+                const response = await fetch("/", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error("Failed to upload file.");
+                }
+                
+                const data = await response.json();
+                const summaryPoints = data.summary.split("\n").filter(point => point.trim() !== "");
+                const summaryHTML = summaryPoints.map(point => `<li>${point}</li>`).join("");
+                
+                summaryDiv.innerHTML = `
+                    <h2>Summary</h2>
+                    <ul>${summaryHTML}</ul>
+                `;
+            } catch (error) {
+                summaryDiv.innerHTML = `<h2>Error</h2><p>${error.message}</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
